@@ -239,18 +239,18 @@ function setupApp() {
                 priority
             });
 
-            const todo = {
-                id: todoRef.id,
-                userId: currentUser.uid,
-                title,
-                description,
-                completed: false,
-                createdAt: Date.now(),
-                priority
-            };
+            // const todo = {
+            //     id: todoRef.id,
+            //     userId: currentUser.uid,
+            //     title,
+            //     description,
+            //     completed: false,
+            //     createdAt: Date.now(),
+            //     priority
+            // };
 
-            todos.unshift(todo);
-            renderTodos();
+            // todos.unshift(todo);
+            // renderTodos();
         } catch (error) {
             console.error('Erro ao adicionar tarefa:', error);
             alert('Erro ao adicionar tarefa');
