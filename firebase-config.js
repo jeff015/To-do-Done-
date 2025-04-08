@@ -78,5 +78,5 @@ try {
     });
     
     // Alerta o usuário sobre o problema
-    alert('Ocorreu um erro ao inicializar os serviços Firebase. Por favor, recarregue a página ou tente novamente mais tarde.');
+    // alert('Ocorreu um erro ao inicializar os serviços Firebase. Por favor, recarregue a página ou tente novamente mais tarde.');
 }
