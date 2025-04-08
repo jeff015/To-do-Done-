@@ -4,15 +4,84 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Done! - Organize suas tarefas</title>
- 
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+
+  <!-- Firebase SDKs -->
+  <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
+
+  <script src="firebase-config.js"></script>
+  <script src="app.js" defer></script>
+
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+
+</head>
+<body>
+  <div class="container">
+    <div id="auth-container" class="auth-container">
+      <div class="auth-box">
+        <div class="logo">
+          <i data-lucide="check-circle-2" class="logo-icon"></i>
+          <h1>Done!</h1>
+        </div>
+        <p class="subtitle">Faça login para gerenciar suas tarefas</p>
+        
+        <form id="auth-form" class="auth-form">
+          <div class="form-group">
+            <label for="email">E-mail</label>
+            <input type="email" id="email" required>
+          </div>
+          <div class="form-group">
+            <label for="password">Senha</label>
+            <input type="password" id="password" required minlength="6">
+          </div>
+          <div class="auth-actions">
+            <button type="submit" class="btn btn-primary" id="login-btn">
+              <i data-lucide="log-in"></i>
+              Entrar
+            </button>
+            <button type="button" class="btn btn-secondary" id="register-btn">
+              <i data-lucide="user-plus"></i>
+              Criar conta
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <div id="app-container" class="app-container hidden">
       <header class="header">
         <div class="header-content">
           <div class="logo">
+            <i data-lucide="check-circle-2" class="logo-icon"></i>
             <h1>Done!</h1>
+          </div>
+          <div class="user-menu">
+            <span id="user-email" class="user-email"></span>
+            <button id="logout-btn" class="btn btn-secondary">
+              <i data-lucide="log-out"></i>
+              Sair
+            </button>
           </div>
         </div>
         <p class="subtitle">Organize suas tarefas de forma simples e eficiente</p>
       </header>
+
+      <div id="progress-container" class="progress-container hidden">
+        <div class="progress-info">
+          <span id="progress-text">Progresso: 0 de 0 tarefas concluídas</span>
+          <span id="progress-percentage">0%</span>
+        </div>
+        <div class="progress-bar">
+          <div id="progress-fill" class="progress-fill"></div>
+        </div>
+      </div>
+
+      <form id="todo-form" class="todo-form">
+        <div class="form-group">
           <label for="title">Título da tarefa</label>
           <input type="text" id="title" placeholder="Ex: Preparar apresentação" required>
         </div>
@@ -66,5 +135,49 @@
       </div>
     </div>
   </div>
+
+  <div id="loading" class="loading-overlay">
+    <div class="loading-spinner"></div>
+    <p>Carregando...</p>
+  </div>
+
+  <template id="todo-item-template">
+    <div class="todo-item">
+      <div class="todo-content">
+        <button class="todo-checkbox">
+          <i data-lucide="check"></i>
+        </button>
+        <div class="todo-text">
+          <h3 class="todo-title"></h3>
+          <p class="todo-description"></p>
+          <div class="todo-meta">
+            <span class="todo-priority"></span>
+            <span class="todo-date"></span>
+          </div>
+        </div>
+        <div class="todo-actions">
+          <button class="todo-edit" title="Editar tarefa">
+            <i data-lucide="pencil"></i>
+          </button>
+          <button class="todo-delete" title="Excluir tarefa">
+            <i data-lucide="trash-2"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+  </template>
+
+  <div id="delete-modal" class="modal hidden">
+    <div class="modal-content">
+      <p>Tem certeza que deseja excluir esta tarefa?</p>
+      <div class="modal-actions">
+        <button id="cancel-delete" class="btn btn-secondary">Cancelar</button>
+        <button id="confirm-delete" class="btn btn-danger">Excluir</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="firebase-config.js"></script>
+  <script src="app.js" defer></script>
 </body>
 </html>
