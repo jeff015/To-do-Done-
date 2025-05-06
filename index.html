@@ -6,138 +6,81 @@
   <title>Done! - Organize suas tarefas</title>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
-
-  <!-- Firebase SDKs -->
-  <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-auth-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
-  <script src="firebase-config.js"></script>
-  <script src="app.js" defer></script>
-
-  <!-- Lucide Icons -->
   <script src="https://unpkg.com/lucide@latest"></script>
-
 </head>
 <body>
   <div class="container">
-    <div id="auth-container" class="auth-container">
-      <div class="auth-box">
-        <div class="logo">
-          <i data-lucide="check-circle-2" class="logo-icon"></i>
-          <h1>Done!</h1>
-        </div>
-        <p class="subtitle">Faça login para gerenciar suas tarefas</p>
-        
-        <form id="auth-form" class="auth-form">
-          <div class="form-group">
-            <label for="email">E-mail</label>
-            <input type="email" id="email" required>
-          </div>
-          <div class="form-group">
-            <label for="password">Senha</label>
-            <input type="password" id="password" required minlength="6">
-          </div>
-          <div class="auth-actions">
-            <button type="submit" class="btn btn-primary" id="login-btn">
-              <i data-lucide="log-in"></i>
-              Entrar
-            </button>
-            <button type="button" class="btn btn-secondary" id="register-btn">
-              <i data-lucide="user-plus"></i>
-              Criar conta
-            </button>
-          </div>
-        </form>
+    <header class="header">
+      <div class="logo">
+        <i data-lucide="check-circle-2" class="logo-icon"></i>
+        <h1>Done!</h1>
+      </div>
+      <p class="subtitle">Organize suas tarefas de forma simples e eficiente</p>
+    </header>
+
+    <div id="progress-container" class="progress-container hidden">
+      <div class="progress-info">
+        <span id="progress-text">Progresso: 0 de 0 tarefas concluídas</span>
+        <span id="progress-percentage">0%</span>
+      </div>
+      <div class="progress-bar">
+        <div id="progress-fill" class="progress-fill"></div>
       </div>
     </div>
 
-    <div id="app-container" class="app-container hidden">
-      <header class="header">
-        <div class="header-content">
-          <div class="logo">
-            <i data-lucide="check-circle-2" class="logo-icon"></i>
-            <h1>Done!</h1>
-          </div>
-          <div class="user-menu">
-            <span id="user-email" class="user-email"></span>
-            <button id="logout-btn" class="btn btn-secondary">
-              <i data-lucide="log-out"></i>
-              Sair
-            </button>
-          </div>
-        </div>
-        <p class="subtitle">Organize suas tarefas de forma simples e eficiente</p>
-      </header>
+    <form id="todo-form" class="todo-form">
+      <div class="form-group">
+        <label for="title">Título da tarefa</label>
+        <input type="text" id="title" placeholder="Ex: Preparar apresentação" required>
+      </div>
 
-      <div id="progress-container" class="progress-container hidden">
-        <div class="progress-info">
-          <span id="progress-text">Progresso: 0 de 0 tarefas concluídas</span>
-          <span id="progress-percentage">0%</span>
-        </div>
-        <div class="progress-bar">
-          <div id="progress-fill" class="progress-fill"></div>
+      <div class="form-group">
+        <label for="description">Descrição</label>
+        <textarea id="description" rows="3" placeholder="Adicione detalhes sobre a tarefa..."></textarea>
+      </div>
+
+      <div class="form-group">
+        <label>Prioridade</label>
+        <div class="priority-options">
+          <label class="priority-option">
+            <input type="radio" name="priority" value="low" checked>
+            <span>Baixa</span>
+          </label>
+          <label class="priority-option">
+            <input type="radio" name="priority" value="medium">
+            <span>Média</span>
+          </label>
+          <label class="priority-option">
+            <input type="radio" name="priority" value="high">
+            <span>Alta</span>
+          </label>
         </div>
       </div>
 
-      <form id="todo-form" class="todo-form">
-        <div class="form-group">
-          <label for="title">Título da tarefa</label>
-          <input type="text" id="title" placeholder="Ex: Preparar apresentação" required>
-        </div>
+      <button type="submit" class="btn btn-primary">
+        <i data-lucide="plus-circle"></i>
+        Adicionar Tarefa
+      </button>
+    </form>
 
-        <div class="form-group">
-          <label for="description">Descrição</label>
-          <textarea id="description" rows="3" placeholder="Adicione detalhes sobre a tarefa..."></textarea>
-        </div>
-
-        <div class="form-group">
-          <label>Prioridade</label>
-          <div class="priority-options">
-            <label class="priority-option">
-              <input type="radio" name="priority" value="low" checked>
-              <span>Baixa</span>
-            </label>
-            <label class="priority-option">
-              <input type="radio" name="priority" value="medium">
-              <span>Média</span>
-            </label>
-            <label class="priority-option">
-              <input type="radio" name="priority" value="high">
-              <span>Alta</span>
-            </label>
-          </div>
-        </div>
-
-        <button type="submit" class="btn btn-primary">
-          <i data-lucide="plus-circle"></i>
-          Adicionar Tarefa
-        </button>
-      </form>
-
-      <div class="todos-header">
-        <h2 id="todos-count">Nenhuma tarefa</h2>
-        <div class="sort-container">
-          <i data-lucide="list-filter"></i>
-          <select id="sort-select">
-            <option value="date">Data</option>
-            <option value="priority">Prioridade</option>
-            <option value="status">Status</option>
-          </select>
-        </div>
-      </div>
-
-      <div id="todos-container" class="todos-container">
-        <div id="empty-state" class="empty-state">
-          <p>Sua lista de tarefas está vazia</p>
-          <p class="empty-state-subtitle">Adicione uma nova tarefa usando o formulário acima</p>
-        </div>
+    <div class="todos-header">
+      <h2 id="todos-count">Nenhuma tarefa</h2>
+      <div class="sort-container">
+        <i data-lucide="list-filter"></i>
+        <select id="sort-select">
+          <option value="date">Data</option>
+          <option value="priority">Prioridade</option>
+          <option value="status">Status</option>
+        </select>
       </div>
     </div>
-  </div>
 
-  <div id="loading" class="loading-overlay">
-    <div class="loading-spinner"></div>
-    <p>Carregando...</p>
+    <div id="todos-container" class="todos-container">
+      <div id="empty-state" class="empty-state">
+        <p>Sua lista de tarefas está vazia</p>
+        <p class="empty-state-subtitle">Adicione uma nova tarefa usando o formulário acima</p>
+      </div>
+    </div>
   </div>
 
   <template id="todo-item-template">
@@ -175,5 +118,7 @@
       </div>
     </div>
   </div>
+
+  <script src="app.js"></script>
 </body>
 </html>
