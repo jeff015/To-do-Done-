@@ -1,4 +1,4 @@
-#  To-do Done - Iteração 2
+#   Done - Iteração 2
 
 ##  Sobre o Projeto
 
