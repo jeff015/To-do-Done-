@@ -1,4 +1,4 @@
-3# Done! - Gerenciador de Tarefas
+# Done! - Gerenciador de Tarefas
 
 
 **Done!** é uma aplicação web moderna para gerenciamento de tarefas, construída com JavaScript puro e Firebase. Organize suas tarefas de forma simples e eficiente, com suporte para funcionamento offline e sincronização em tempo real.
