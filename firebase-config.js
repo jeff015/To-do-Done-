@@ -2,13 +2,13 @@ try {
     // Essas são as credenciais e configurações específicas do projeto Firebase
   // Chaves devem ser protegidas
     const firebaseConfig = {
-        apiKey: "AIzaSyB7di8F6IpS43ATo9rgUR5_063Nezm9BKk",        // Chave da API para autenticação com os serviços Firebase
-        authDomain: "done-4ee38.firebaseapp.com",                  // Domínio de autenticação para login de usuários
-        projectId: "done-4ee38",                                   // ID único do projeto no Firebase
-        storageBucket: "done-4ee38.firebasestorage.app",           // Bucket de armazenamento para arquivos e mídia
-        messagingSenderId: "979722629186",                         // ID do remetente para funcionalidades de mensagem
-        appId: "1:979722629186:web:851b652182c186c59bbddb",        // ID único da aplicação no Firebase
-        measurementId: "G-CJ1XV63R5T"                              // ID para métricas e analytics
+        apiKey: "*****************",        // Chave da API para autenticação com os serviços Firebase
+        authDomain: "*****************",                  // Domínio de autenticação para login de usuários
+        projectId: "*****************",                                   // ID único do projeto no Firebase
+        storageBucket: "*****************",           // Bucket de armazenamento para arquivos e mídia
+        messagingSenderId: "*****************",                         // ID do remetente para funcionalidades de mensagem
+        appId: "*****************",        // ID único da aplicação no Firebase
+        measurementId: "*****************"                              // ID para métricas e analytics
     };
 
     // Inicializa o Firebase apenas se ainda não estiver inicializado
